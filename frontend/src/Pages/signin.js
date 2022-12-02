@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../Components/navbar'; 
+import configData from "../config.json";
 
 
 function Signin(){
@@ -33,7 +34,7 @@ function Signin(){
                 })
             }
             try{
-                const resp = await fetch("http://127.0.0.1:5000/api/token", opts)
+                const resp = await fetch(configData.SERVER_URL + "/api/token", opts)
                 if(resp.status !== 200) {
                     alert("username & password do not match");
                 }else{

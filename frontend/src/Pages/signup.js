@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Navbar from '../Components/navbar'; 
 import { useNavigate } from 'react-router-dom';
+import configData from "../config.json";
 
 function Signup(){
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ function Signup(){
             })
         }
         try{
-            const resp = await fetch("http://127.0.0.1:5000/api/create_user", opts)
+            const resp = await fetch(configData.SERVER_URL + "/api/create_user", opts)
             if(resp.status !== 200) {
                 alert("Error occured while creating a user");
             }else{

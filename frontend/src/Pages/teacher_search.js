@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/Autocomplete';
+import configData from "../config.json";
 
 function TeacherSearch(){
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ function TeacherSearch(){
                       "Authorization": "Bearer " + token }
       }
       try{
-          const resp = await fetch("http://127.0.0.1:5000/api/get_nearby_teachers?"+extra_string, opts)
+          const resp = await fetch(configData.SERVER_URL + "/api/get_nearby_teachers?"+extra_string, opts)
           if(resp.status !== 200) {
               alert("Error occured while getting a teacher");
               console.log(resp.json());
@@ -114,22 +115,7 @@ function TeacherSearch(){
       });
     }
 
-    const top100Films = [
-      { title: 'The Shawshank Redemption', year: 1994 },
-      { title: 'The Godfather', year: 1972 },
-      { title: 'The Godfather: Part II', year: 1974 },
-      { title: 'The Dark Knight', year: 2008 },
-      { title: '12 Angry Men', year: 1957 },
-      { title: "Schindler's List", year: 1993 },
-      { title: 'Pulp Fiction', year: 1994 },
-      { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-      { title: 'The Good, the Bad and the Ugly', year: 1966 },
-      { title: 'Fight Club', year: 1999 },
-      { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
-      { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
-      { title: 'Forrest Gump', year: 1994 },
-      { title: 'Inception', year: 2010 },
-    ];
+    
 
     return(
         <div className='text-center'>
@@ -156,7 +142,22 @@ function TeacherSearch(){
 }
 export default TeacherSearch;
 
-/*
+/*const top100Films = [
+      { title: 'The Shawshank Redemption', year: 1994 },
+      { title: 'The Godfather', year: 1972 },
+      { title: 'The Godfather: Part II', year: 1974 },
+      { title: 'The Dark Knight', year: 2008 },
+      { title: '12 Angry Men', year: 1957 },
+      { title: "Schindler's List", year: 1993 },
+      { title: 'Pulp Fiction', year: 1994 },
+      { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
+      { title: 'The Good, the Bad and the Ugly', year: 1966 },
+      { title: 'Fight Club', year: 1999 },
+      { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
+      { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
+      { title: 'Forrest Gump', year: 1994 },
+      { title: 'Inception', year: 2010 },
+    ];
             <Autocomplete
               multiple
               id="searchTeacher"

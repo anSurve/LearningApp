@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import NavbarLogged from '../Components/navbar_logged'; 
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import configData from "../config.json";
 
 const TeacherSelection = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const TeacherSelection = () => {
     }
     try{
         const extra_string = "teacher_id="+teacher_id+"&"+"skill_id="+skill;
-        const resp = await fetch("http://127.0.0.1:5000/api/get_teacher_data?" + extra_string, opts)
+        const resp = await fetch(configData.SERVER_URL + "/api/get_teacher_data?" + extra_string, opts)
         if(resp.status !== 200) {
             alert("Error occured while fetching teacher data");
             setTeacherData("");
@@ -42,7 +43,7 @@ const fetchSimilarTeachers = async () => {
   }
   try{
       const extra_string = "teacher_id="+teacher_id+"&"+"skill_id="+skill;
-      const resp = await fetch("http://127.0.0.1:5000/api/recommended_teachers?" + extra_string, opts)
+      const resp = await fetch(configData.SERVER_URL + "/api/recommended_teachers?" + extra_string, opts)
       if(resp.status !== 200) {
           alert("Error occured while fetching recommended_teachers");
           setSimilarTeachers("");
@@ -73,7 +74,7 @@ const fetchSimilarTeachers = async () => {
         })
     }
     try{
-        const resp = await fetch("http://127.0.0.1:5000/api/start_learning", opts)
+        const resp = await fetch(configData.SERVER_URL + "/api/start_learning", opts)
         if(resp.status !== 200) {
             alert("Error occured while submitting learning request");
         }else{

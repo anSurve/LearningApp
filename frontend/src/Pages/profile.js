@@ -2,6 +2,7 @@ import React, {useState, useEffect }  from 'react'
 import NavbarLogged from '../Components/navbar_logged';  
 import { Navigate } from "react-router-dom";
 import NonEditableProfile from '../Components/profile_noneditable';
+import configData from "../config.json";
 
 function Profile(){
     
@@ -16,7 +17,7 @@ function Profile(){
                     "Authorization": "Bearer " + token }
       }
       try{
-          const resp = await fetch("http://127.0.0.1:5000/api/get_user", opts)
+          const resp = await fetch(configData.SERVER_URL + "/api/get_user", opts)
           if(resp.status !== 200) {
               alert("Error occured while fetching user");
               setuserData("");

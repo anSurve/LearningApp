@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Map, GoogleApiWrapper } from "google-maps-react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import configData from "../config.json";
 
 export class GoogleApi extends Component {
     constructor(props) {
@@ -183,5 +184,5 @@ render() {
 }
 
 export default GoogleApiWrapper({
-    apiKey: "AIzaSyDc5U0P-tTdUaLRLGLCTWVTg1m1Xkwt2qA"
+    apiKey: configData.GOOGLE_API_KEY
 })(GoogleApi);

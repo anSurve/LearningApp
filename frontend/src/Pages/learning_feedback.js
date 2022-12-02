@@ -4,6 +4,7 @@ import NavbarLogged from '../Components/navbar_logged';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import configData from "../config.json";
 
 const LearningFeedback = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const LearningFeedback = () => {
         })
     }
     try{
-        const resp = await fetch("http://127.0.0.1:5000/api/submit_feedback", opts)
+        const resp = await fetch(configData.SERVER_URL + "/api/submit_feedback", opts)
         if(resp.status !== 200) {
             alert("Error occured while submitting feedback");
         }else{

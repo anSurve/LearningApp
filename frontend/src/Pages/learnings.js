@@ -2,6 +2,7 @@ import React, {useState, useEffect } from 'react'
 import NavbarLogged from '../Components/navbar_logged'; 
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import configData from "../config.json";
 
 
 function Learnings(){
@@ -17,7 +18,7 @@ function Learnings(){
                     "Authorization": "Bearer " + token }
       }
       try{
-          const resp = await fetch("http://127.0.0.1:5000/api/my_learnings", opts)
+          const resp = await fetch(configData.SERVER_URL + "/api/my_learnings", opts)
           if(resp.status !== 200) {
               alert("Error occured while fetching learnings");
               setLearnings("");

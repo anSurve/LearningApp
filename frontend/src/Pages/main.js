@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import NavbarLogged from '../Components/navbar_logged'; 
 import { Navigate  } from "react-router-dom";
-
+import configData from "../config.json";
 
 function Main(){
     const token = sessionStorage.getItem("token");
@@ -17,7 +17,7 @@ function Main(){
                       "Authorization": "Bearer " + token }
         }
         try{
-            const resp = await fetch("http://127.0.0.1:5000/api/get_user", opts)
+            const resp = await fetch(configData.SERVER_URL + "/api/get_user", opts)
             if(resp.status !== 200) {
                 alert("Error occured while fetching user");
                 setName("");
@@ -40,7 +40,7 @@ function Main(){
                     "Authorization": "Bearer " + token }
       }
       try{
-          const resp = await fetch("http://127.0.0.1:5000/api/get_learning_stats", opts)
+          const resp = await fetch(configData.SERVER_URL + "/api/get_learning_stats", opts)
           if(resp.status !== 200) {
               alert("Error occured while fetching learning stats");
               setLearningStats("");

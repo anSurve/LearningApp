@@ -3,6 +3,7 @@ import Navbar from '../Components/navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import configData from "../config.json";
 
 function Signup3(){
     const [allLangs, setLang] = useState([]);
@@ -48,7 +49,7 @@ function Signup3(){
             })
         }
         try{
-            const resp = await fetch("http://127.0.0.1:5000/api/update_user_languages", opts)
+            const resp = await fetch(configData.SERVER_URL + "/api/update_user_languages", opts)
             if(resp.status !== 200) {
                 alert("Error occured while creating a user");
             }else{
@@ -69,7 +70,7 @@ function Signup3(){
             headers: {"Content-Type": "application/json"}
         }
         try{
-            const resp = await fetch("http://127.0.0.1:5000/api/get_languages", opts)
+            const resp = await fetch(configData.SERVER_URL + "/api/get_languages", opts)
             if(resp.status !== 200) {
                 alert("Error occured while creating a user");
             }else{

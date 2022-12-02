@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../Components/navbar'; 
 import GoogleApi from '../Components/google_api';
 import { useNavigate } from 'react-router-dom';
+import configData from "../config.json";
 
 function Signup2(){
 
@@ -33,7 +34,7 @@ function Signup2(){
             })
         }
         try{
-            const resp = await fetch("http://127.0.0.1:5000/api/update_user_location", opts)
+            const resp = await fetch(configData.SERVER_URL + "/api/update_user_location", opts)
             if(resp.status !== 200) {
                 alert("Error occured while creating a user");
             }else{
@@ -52,7 +53,7 @@ function Signup2(){
             <Navbar/>
             <center>
                 <br/>
-            <h2>Select your location from here</h2>
+            <h2>Select Your Location Here</h2>
                 <div style={{ maxHeight:'400px', maxWidth:'1000px' }}>
                     <GoogleApi
                         location_details={location_details}
