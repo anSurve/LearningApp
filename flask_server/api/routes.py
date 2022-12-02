@@ -65,6 +65,22 @@ def get_user():
         ), 401
 
 
+@api.route("/get_learning_stats", methods=["GET"])
+@jwt_required()
+def get_learning_stats():
+    try:
+        user_id = current_user['data']
+        learning_stats = Learning.get_learning_stats(user_id)
+        return jsonify(
+            learning_stats=learning_stats
+        ), 200
+    except Exception as e:
+        print(str(e))
+        return jsonify(
+            res="User not authenticated"
+        ), 401
+
+
 @api.route("/get_teacher_data", methods=["GET"])
 @jwt_required()
 def get_teacher_data():

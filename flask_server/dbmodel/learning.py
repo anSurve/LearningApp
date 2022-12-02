@@ -84,3 +84,31 @@ def submit_feedback(learning_id, skill_rating, lang_rating, comm_rating, punct_r
         print(str(e))
         return False
     return learning_id
+
+
+def get_learning_stats(student_id):
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("select count(skill_id),count(teacher_id) \
+                        from learning_data where student_id = {};".format(student_id))
+        skill_teacher_cnt = cur.fetchall()
+
+        cur.execute("select count(1) from learning_data \
+                    where end_date is not null and student_id = {};".format(student_id))
+        finished_cnt = cur.fetchall()
+
+        cur.execute("select count(1) from learning_data \
+                    where end_date is null and student_id = {};".format(student_id))
+        ongoing_cnt = cur.fetchall()
+        resp = {
+            "registered_skills": skill_teacher_cnt[0][0],
+            "total_teachers": skill_teacher_cnt[0][1],
+            "finished_learnings": finished_cnt[0][0],
+            "ongoing_learnings": ongoing_cnt[0][0]
+        }
+        return resp
+    except Exception as e:
+        print(str(e))
+        return False
+

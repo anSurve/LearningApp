@@ -51,6 +51,7 @@ function Signup2(){
         <div>
             <Navbar/>
             <center>
+                <br/>
             <h2>Select your location from here</h2>
                 <div style={{ maxHeight:'400px', maxWidth:'1000px' }}>
                     <GoogleApi

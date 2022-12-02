@@ -51,9 +51,15 @@ function Signup(){
             alert("There has been some error creating a user");
         }
     }
+
+    const signIn = () => {
+        navigate('/signin');
+    }
+
     return(
         <div>
         <Navbar/><center>
+            <br/>
         <h2>Sign Up Page</h2></center>
         <div className="container mt-3">
         <section className='d-flex justify-content-between'>
@@ -118,7 +124,8 @@ function Signup(){
                         Next
                     </Button>
                 </Form>
-                <p className='mt-3'>Already have an account. <span>Sign In</span> </p>
+                <p className='mt-3'>Already have an account.&nbsp;
+                <span onClick={signIn} style={{cursor:'pointer', color:'blue'}}><u>Sign in</u></span></p>
             </div>
             <SignImg />
         </section>

@@ -51,18 +51,18 @@ function Profile(){
         <div className='text-center'>
         <NavbarLogged/>
         <center>
-          <div className='row w-75' style={{height: '150px'}}>
-            <div className='bg-info w-25 align-items-center'>
-              <h2>Profile Page</h2>
+          <div className='row w-75' style={{height: '150px', verticalAlign:'middle'}}>
+            <div className='bg-info w-25 align-items-center' style={{borderRadius:'85px'}}>
+              <h2 style={{marginTop: '50px'}}>Profile Page</h2>
             </div>
-            <div className='bg-secondary text-white w-75 mt-10' style={{verticalAlign:'middle'}}>
-              <div className='text-left' style={{ marginLeft: '15px', marginTop: '10px'}}>
-                <h2>{ userData.first_name + ' ' + userData.last_name}</h2>
-                <br/>
+            <div className='text-white w-75 mt-10' style={{borderRadius:'85px', backgroundColor:'SlateBlue'}}>
+              <div className='text-center' style={{ marginLeft: '15px', marginTop: '10px', VerticalAlign:'middle'}}>
+                <h2 style={{marginTop: '40px'}}>{ userData.first_name + ' ' + userData.last_name}</h2>
                 { userData.email }
               </div>
             </div>
           </div>
+          <br/>
           <div className='w-75' style={{marginTop:'15px'}}>
             <NonEditableProfile
             user_data={userData}

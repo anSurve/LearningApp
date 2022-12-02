@@ -54,6 +54,7 @@ function Signup3(){
             }else{
                 const data = await resp.json();
                 sessionStorage.setItem("user_id", data.user_id);
+                alert("User has been successfully created");
                 navigate('/signin');
             }
 
@@ -95,20 +96,10 @@ function Signup3(){
     return(
         <div>
             <Navbar/>
-            <center>
-            <h2>Select your preferred languages here</h2>
+            <center><br/>
+            <h2>Select Your Preferred Languages Here</h2>
             <div className="w-50 p-3">
                 <Form >
-                    <Form.Group controlId="formProfilePic" style={{ marginTop: '10px'}}>
-                    <div className="row">
-                        <div className="col-sm-4">
-                            <Form.Label>Upload Profile Picture</Form.Label>
-                        </div>
-                        <div className="col">
-                            <Form.Control type="file" name='profile_pic' />
-                        </div>
-                    </div>
-                    </Form.Group>
 
                     <Form.Group controlId="formLanguage1" style={{ marginTop: '10px'}}>
                     <div className="row">

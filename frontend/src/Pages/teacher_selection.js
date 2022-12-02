@@ -227,7 +227,7 @@ const fetchSimilarTeachers = async () => {
 
   return (
     <div className='text-center'>
-        <NavbarLogged/>
+        <NavbarLogged/><br/>
         <h2>Teacher selection</h2>
         {teacherData && <TeacherDetails teacher={teacherData} />}
         <hr/>

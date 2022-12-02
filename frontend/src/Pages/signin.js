@@ -52,9 +52,14 @@ function Signin(){
         }
     }
 
+    const signup = () => {
+        navigate('/signup');
+    }
+
     return(
         <div> 
         <Navbar/><center>
+            <br/>
         <h2>Login Page</h2></center>
         <div className="container mt-3">
         <section className='d-flex justify-content-between'>
@@ -75,7 +80,8 @@ function Signin(){
                         Submit
                     </Button>
                 </Form>
-                <p className='mt-3'>Create a new account. <span>Sign Up</span> </p>
+                <p className='mt-3'>Create a new account.&nbsp;
+                <span onClick={signup} style={{cursor:'pointer', color:'blue'}}><u>Sign up</u></span></p>
             </div> 
             <SignImg />
         </section>

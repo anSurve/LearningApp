@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import NavbarLogged from '../Components/navbar_logged'; 
 import Button from 'react-bootstrap/Button';
@@ -66,7 +66,7 @@ const LearningFeedback = () => {
 
   return (
     <div className='text-center'>
-        <NavbarLogged/><center>
+        <NavbarLogged/><br/><center>
         <h2>Feedback Page</h2>
         <br />
         <Form >
@@ -184,7 +184,7 @@ const LearningFeedback = () => {
         </Form> 
         <Button variant="primary" className='col-sm-4 mt-3' style={{ width: '20rem'}} onClick={submitFeedback}>
             Submit
-        </Button>                          
+        </Button>
         </center>
     </div>
   );

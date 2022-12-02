@@ -1,6 +1,5 @@
 import React, {useState, useEffect } from 'react'
 import NavbarLogged from '../Components/navbar_logged'; 
-import { Navigate  } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,15 +40,6 @@ function Learnings(){
       }
     });
 
-    if(requestLearningComplete){
-      if (!learnings || learnings === "" || learnings === undefined){
-        sessionStorage.removeItem("token");
-        console.log("redirecting")
-        return <Navigate to="/signin"/>
-      }else{
-        console.log(learnings);
-      }
-    }
 
     const finishLearning = (learning_id) =>{
       navigate('/teacher_feedback/'+learning_id);
@@ -86,7 +76,7 @@ function Learnings(){
 
     return(
         <div className='text-center'>
-            <NavbarLogged/>
+            <NavbarLogged/><br/>
             <h2>My Learning dashboard</h2>
             <br/>
             
