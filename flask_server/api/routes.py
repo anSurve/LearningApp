@@ -9,6 +9,7 @@ from recommendations.recommendation_system import RecommendationSystem
 import dbmodel.language as Languages
 import dbmodel.teacher as Teacher
 import dbmodel.learning as Learning
+import dbmodel.teachings as Teaching
 
 api = Blueprint('api', __name__)
 
@@ -73,6 +74,23 @@ def get_learning_stats():
         learning_stats = Learning.get_learning_stats(user_id)
         return jsonify(
             learning_stats=learning_stats
+        ), 200
+    except Exception as e:
+        print(str(e))
+        return jsonify(
+            res="User not authenticated"
+        ), 401
+
+
+@api.route("/get_teaching_stats", methods=["GET"])
+@jwt_required()
+def get_teachings_stats():
+    try:
+        user_id = current_user['data']
+        teaching_stats = Teaching.get_teachings_stats(user_id)
+        print(teaching_stats)
+        return jsonify(
+            teaching_stats=teaching_stats
         ), 200
     except Exception as e:
         print(str(e))
@@ -203,6 +221,22 @@ def my_learnings():
         past_learnings = Learning.get_past_learnings(user_id)
         return jsonify(
             past_learnings=past_learnings
+        ), 200
+    except Exception as e:
+        print(str(e))
+        return jsonify(
+            res="User not authenticated"
+        ), 401
+
+
+@api.route("/my_teachings", methods=["GET"])
+@jwt_required()
+def my_teachings():
+    try:
+        user_id = current_user['data']
+        past_teachings = Teaching.get_past_teachings(user_id)
+        return jsonify(
+            past_teachings=past_teachings
         ), 200
     except Exception as e:
         print(str(e))

@@ -1,5 +1,6 @@
 import React, {useState, useEffect }  from 'react'
 import NavbarLogged from '../Components/navbar_logged';  
+import NavbarLoggedTeacher from '../Components/navbar_logged_teacher'; 
 import { Navigate } from "react-router-dom";
 import NonEditableProfile from '../Components/profile_noneditable';
 import configData from "../config.json";
@@ -50,7 +51,8 @@ function Profile(){
 
     return(
         <div className='text-center'>
-        <NavbarLogged/>
+          {userData.role === "Student" ? <NavbarLogged/> : <NavbarLoggedTeacher/>}
+        
         <center>
           <div className='row w-75' style={{height: '150px', verticalAlign:'middle'}}>
             <div className='bg-info w-25 align-items-center' style={{borderRadius:'85px'}}>
