@@ -1,15 +1,41 @@
-import React, {useState} from 'react';
+import * as React from 'react';
+import {useState, useEffect} from 'react';
 import NavbarLogged from '../Components/navbar_logged'; 
-import Form from 'react-bootstrap/Form';
+//import Form from 'react-bootstrap/Form';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/Autocomplete';
 import configData from "../config.json";
 
 function TeacherSearch(){
     const navigate = useNavigate();
     const [teachers, setTeachers] = useState();
+
+    const [skills, setSkills] = useState();
+    const [requestComplete, setRequestComplete] = useState(false);
+
+    const fetchSkills = async () => {
+      const opts = {
+          method: "GET",
+          headers: {"Content-Type": "application/json"}
+      }
+      try{
+          const resp = await fetch(configData.SERVER_URL + "/api/get_list_of_skills?", opts)
+          if(resp.status !== 200) {
+              alert("Error occured while fetching skills data");
+              setSkills("");
+          }else{
+              const data = await resp.json();
+              setSkills(data.skills_lst);
+              setRequestComplete(true);
+          }
+      }catch(error){
+        setRequestComplete(true);
+        alert("The API is down");
+      }
+   }
+
     const getNearbyTeacher = async () => {
       const skill = document.getElementById("skill").value;
       const token = sessionStorage.getItem("token");
@@ -107,15 +133,12 @@ function TeacherSearch(){
         <div id="accordion" style={{ width:'48rem', marginTop:'30px' }}>{listTeachers}</div>
       );
     }
-    const onTagsChange = (event, values) => {
-      this.setState({
-        tags: values
-      }, () => {
-        console.log(this.state.tags);
-      });
-    }
 
-    
+    useEffect(() => {
+      if(!requestComplete){
+        fetchSkills();
+      }
+    });
 
     return(
         <div className='text-center'>
@@ -125,15 +148,22 @@ function TeacherSearch(){
             <br/>
 
             <center>
-            <Form  style={{ textAlignL:'center' }}>
-              <Form.Group className="mb-3 col-lg-6 align-center" controlId="skill">
-                  <Form.Control type="text" name='skill' placeholder="Enter Skill" />
-              </Form.Group>
-            </Form>
-            <br/>
-            <Button variant="primary" className='col-lg-4' onClick={ getNearbyTeacher }>
-                Search
-            </Button>
+            {skills && 
+              <>
+              <div>
+              <Autocomplete
+                disablePortal
+                id="skill"
+                options={skills}
+                sx={{ width: 500 }}
+                renderInput={(params) => <TextField {...params} label="skill" />}
+              />
+              </div>
+              
+              <br/>
+              <Button variant="primary" className='col-sm-4 mb-2' onClick={getNearbyTeacher}>
+                    Submit
+              </Button> </> }
             <br/>
             {teachers && <TeachersList teachers={teachers}/>}</center>
             
@@ -142,37 +172,16 @@ function TeacherSearch(){
 }
 export default TeacherSearch;
 
-/*const top100Films = [
-      { title: 'The Shawshank Redemption', year: 1994 },
-      { title: 'The Godfather', year: 1972 },
-      { title: 'The Godfather: Part II', year: 1974 },
-      { title: 'The Dark Knight', year: 2008 },
-      { title: '12 Angry Men', year: 1957 },
-      { title: "Schindler's List", year: 1993 },
-      { title: 'Pulp Fiction', year: 1994 },
-      { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-      { title: 'The Good, the Bad and the Ugly', year: 1966 },
-      { title: 'Fight Club', year: 1999 },
-      { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
-      { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
-      { title: 'Forrest Gump', year: 1994 },
-      { title: 'Inception', year: 2010 },
-    ];
-            <Autocomplete
-              multiple
-              id="searchTeacher"
-              options={top100Films}
-              getOptionLabel={option => option.title}
-              defaultValue={[top100Films[13]]}
-              onChange={onTagsChange}
-              sx={{ width: 300 }}
-              renderInput={(params) => 
-                <TextField
-                  {...params}
-                  variant="standard"
-                  label="Multiple values"
-                  placeholder="Favorites"
-                  margin="normal"
-                  fullWidth
-                 />}
-            />*/
+
+ /*
+ 
+  <Form  style={{ textAlignL:'center' }}>
+    <Form.Group className="mb-3 col-lg-6 align-center" controlId="skill">
+        <Form.Control type="text" name='skill' placeholder="Enter Skill" />
+    </Form.Group>
+  </Form>
+  <br/>
+  <Button variant="primary" className='col-lg-4' onClick={ getNearbyTeacher }>
+      Search
+  </Button>
+  */

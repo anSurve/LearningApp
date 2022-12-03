@@ -10,6 +10,7 @@ import dbmodel.language as Languages
 import dbmodel.teacher as Teacher
 import dbmodel.learning as Learning
 import dbmodel.teachings as Teaching
+import dbmodel.skills as Skills
 
 api = Blueprint('api', __name__)
 
@@ -325,4 +326,16 @@ def update_user_languages():
         )
     return jsonify(
             res="Error occurred while creating a user."
+        ), 500
+
+
+@api.route("/get_list_of_skills", methods=["GET"])
+def get_list_of_skills():
+    skills_lst = Skills.get_list_of_skills()
+    if skills_lst:
+        return jsonify(
+            skills_lst=skills_lst
+        )
+    return jsonify(
+            res="Error occurred while fetching skills."
         ), 500

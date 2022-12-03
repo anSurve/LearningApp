@@ -10,6 +10,7 @@ import Signup from './Pages/signup';
 import Signup2 from './Pages/signup2';
 import Signup3 from './Pages/signup3';
 import AboutUs from './Pages/about_us';
+import AboutMe from './about_us';
 import Teachers from './Pages/teachers';
 import Students from './Pages/students';
 import TeacherSelection from './Pages/teacher_selection';
@@ -35,6 +36,7 @@ function App() {
                 <Route exact path="/teachings" element={<Teachings/>} />
                 <Route exact path="/students" element={<Students/>} />
                 <Route exact path="/about_us" element={<AboutUs/>} />
+                <Route exact path="/about_me" element={<AboutMe/>} />
                 <Route exact path="/contact_me" element={<ContactMe/>} />
                 <Route exact path="/signin" element={<Signin/>} />
                 <Route exact path="/signup" element={<Signup/>} />
