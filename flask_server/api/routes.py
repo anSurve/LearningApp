@@ -230,6 +230,23 @@ def my_learnings():
         ), 401
 
 
+@api.route("/my_learning_timeline", methods=["GET"])
+@jwt_required()
+def my_learning_timeline():
+    try:
+        user_id = current_user['data']
+        learning_start_dates, learning_descriptions = Learning.get_learning_start_dates(user_id)
+        return jsonify(
+            learning_start_dates = learning_start_dates,
+            learning_descriptions = learning_descriptions
+        ), 200
+    except Exception as e:
+        print(str(e))
+        return jsonify(
+            res="User not authenticated"
+        ), 401
+
+
 @api.route("/my_teachings", methods=["GET"])
 @jwt_required()
 def my_teachings():

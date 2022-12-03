@@ -2,6 +2,7 @@ import React, {useState, useEffect } from 'react'
 import NavbarLogged from '../Components/navbar_logged'; 
 import { Navigate  } from "react-router-dom";
 import configData from "../config.json";
+import HorizontalTimeline from "react-horizontal-timeline";
 
 function Main(){
     const token = sessionStorage.getItem("token");
@@ -10,6 +11,12 @@ function Main(){
     const [requestComplete, setRequestComplete] = useState(false);
     const [learningStats, setLearningStats] = useState();
     const [learningrRquestComplete, setLearningrRquestComplete] = useState(false);
+    
+    const [previous, setPrevious] = useState(0);
+    const [value, setValue] = useState(0);
+    const [startDates, setStartDates] = useState();
+    const [descriptions, setDescriptions] = useState();
+    const [requestTimelineComplete, setRequestTimelineComplete] = useState(false);
 
     const fetchUser = async () => {
         const opts = {
@@ -58,6 +65,29 @@ function Main(){
       }
     }
 
+    const fetchLearningTimeline = async () => {
+      const opts = {
+          method: "GET",
+          headers: {"Content-Type": "application/json",
+                    "Authorization": "Bearer " + token }
+      }
+      try{
+          const resp = await fetch(configData.SERVER_URL + "/api/my_learning_timeline?", opts)
+          if(resp.status !== 200) {
+              alert("Error occured while fetching skills data");
+              setDescriptions("");
+              setStartDates("");
+          }else{
+              const data = await resp.json();
+              setStartDates(data.learning_start_dates);
+              setDescriptions(data.learning_descriptions);
+              setRequestTimelineComplete(true);
+          }
+      }catch(error){
+        setRequestTimelineComplete(true);
+        alert("The API is down");
+      }
+    }
     useEffect(() => {
       if(!requestComplete){
         fetchUser();
@@ -66,6 +96,10 @@ function Main(){
         if(!learningrRquestComplete){
           fetchLearningStats();
         }
+      }
+      
+      if(!requestTimelineComplete){
+        fetchLearningTimeline();
       }
     });
 
@@ -91,13 +125,13 @@ function Main(){
         <div className="card mt-4" style={{width: '25rem'}}>
           <div className="card-body">
             <h4 className="card-title">No of Registered Learnings</h4>
-            <div className="card-text text-primary"><h1>{ learningStats.registered_skills }</h1><br/></div>
+            <div className="card-text text-primary"><h1>{ learningStats.registered_skills }</h1></div>
           </div>
         </div>
         <div className="card ml-5 mt-4" style={{width: '25rem'}}>
           <div className="card-body">
             <h4 className="card-title">No of Teachers Interacted With</h4>
-            <div className="card-text text-primary"><h1>{ learningStats.total_teachers }</h1><br/></div>
+            <div className="card-text text-primary"><h1>{ learningStats.total_teachers }</h1></div>
           </div>
         </div>
         </div>
@@ -105,13 +139,13 @@ function Main(){
         <div className="card mt-4" style={{width: '25rem'}}>
           <div className="card-body">
             <h4 className="card-title">No of Learnings Finished</h4>
-            <div className="card-text text-success"><h1>{ learningStats.finished_learnings }</h1><br/></div>
+            <div className="card-text text-success"><h1>{ learningStats.finished_learnings }</h1></div>
           </div>
         </div>
         <div className="card ml-5 mt-4" style={{width: '25rem'}}>
           <div className="card-body">
             <h4 className="card-title">No of Learnings In Progress</h4>
-            <div className="card-text text-warning"><h1>{ learningStats.ongoing_learnings }</h1><br/></div>
+            <div className="card-text text-warning"><h1>{ learningStats.ongoing_learnings }</h1></div>
           </div>
         </div>
         </div>
@@ -129,10 +163,31 @@ function Main(){
         <div className='text-center'>
             <NavbarLogged/>
             <br />
-            <h2>Hi, <span style={{color:"Violet"}}>{ name }</span><br/>Your Learnings Till Date:</h2>
+            <h2>Hi, <span style={{color:"Violet"}}>{ name }</span>, Here are Your Learnings Till Date:</h2>
             <hr/>
             <center>
               {learningStats && <LearningStats learningStats={learningStats} />}
+
+              <br/><hr/>
+              <h2>Your Learning Timeline</h2>
+              { startDates && descriptions &&
+                <div style={{marginTop:'50px', textAlign:'center'}}>
+                <div style={{ width: "60%",
+                              height: "100px", 
+                              margin: "0 auto" }}>
+                  <HorizontalTimeline
+                    styles={{ outline: "#DFA867", foreground: "#19295C" }}
+                    index={value}
+                    indexClick={(index) => {
+                      setValue(index);
+                      setPrevious(value);
+                    }}
+                    values={startDates}
+                  />
+                </div>
+                <div className="text-center" style={{textAlign:'center'}}>{descriptions[value]}</div>
+                </div>
+              }
             </center>
         </div>
     );

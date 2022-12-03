@@ -112,3 +112,22 @@ def get_learning_stats(student_id):
         print(str(e))
         return False
 
+
+def get_learning_start_dates(student_id):
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("select a.start_date, b.name, c.first_name, c.last_name\
+                    from learning_data a, skills b, user_account c\
+                    where a.skill_id = b.row_id and a.teacher_id = c.user_id and student_id ={}\
+                    order by start_date;".format(student_id))
+        learning_start_data = cur.fetchall()
+        learning_start_dates = list()
+        learning_descriptions = list()
+        for i in learning_start_data:
+            learning_start_dates.append(str(i[0]))
+            learning_descriptions.append("Started learning "+i[1] + " from " + i[2] + " " + i[3])
+        return learning_start_dates, learning_descriptions
+    except Exception as e:
+        print(str(e))
+        return False
